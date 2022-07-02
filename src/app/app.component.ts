@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  IMain,
-  IWeather,
-  IWeatherData,
-  IWind,
-} from './interfaces';
+import { IMain, IWeather, IWeatherData, IWind } from './interfaces';
 import { ICity, IForecast } from './interfaces/forecast.interface';
 import { IMaster } from './interfaces/master.interface';
 import { CTodayData } from './interfaces/todayData';
@@ -16,8 +11,7 @@ import { AppService } from './service/app.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
-  cityInfo: ICity ;
+  cityInfo: ICity;
   tempInfo: CTodayData;
   forcastTempInfo: IMain[] = [];
   forcastWindInfo: IWind[] = [];
@@ -31,18 +25,17 @@ export class AppComponent implements OnInit {
   coords: { lat: number; lon: number };
   todayDate = new Date(Date.now());
   isLoad = false;
-  masterChartData : IMaster = {
+  masterChartData: IMaster = {
     main: [],
     wind: [],
     weather: [],
-    date: []
+    date: [],
   };
 
   constructor(private appService: AppService) {}
 
   ngOnInit(): void {
     this.getCoordinates();
-    console.log(this.todayDate)
   }
 
   getCoordinates() {
@@ -51,7 +44,12 @@ export class AppComponent implements OnInit {
       this.coords = { lat: latitude, lon: longitude };
       this.getCurrentData();
       this.getForcastData();
+    },
+    function(error) {
+      console.error(error)
+      alert(error.message + " Please enable your GPS.");
     });
+
   }
 
   getCurrentData() {
@@ -74,10 +72,9 @@ export class AppComponent implements OnInit {
       });
   }
 
-  refreshData(){
+  refreshData() {
     this.getCoordinates();
   }
-
 
   formatForcastData(data: IWeatherData[]) {
     data.forEach((element: any) => {
@@ -92,25 +89,26 @@ export class AppComponent implements OnInit {
     this.masterChartData.wind = this.forcastWindInfo;
     this.masterChartData.date = this.dataTime;
     this.isLoad = true;
-
   }
 
-  formatTodayData(data:IWeatherData){
+  formatTodayData(data: IWeatherData) {
     let tempData = new CTodayData();
     tempData.temp = data.main.temp;
     tempData.temp_max = data.main.temp_max;
     tempData.temp_min = data.main.temp_min;
     tempData.humidity = data.main.humidity;
-    tempData.windSpeed = data.wind.speed;   
-    tempData.icon = data.weather[0].icon; 
+    tempData.windSpeed = data.wind.speed;
+    tempData.icon = data.weather[0].icon;
     tempData.description = data.weather[0].description;
     tempData.dateTime = data.dt;
 
-    this.todayDate = new Date(data.dt * 1000)
+    this.todayDate = new Date(data.dt * 1000);
 
     this.tempInfo = tempData;
     // console.log(  new Date(this.tempInfo.dateTime * 1000))
   }
-
-
 }
+function getCoordinates() {
+  throw new Error('Function not implemented.');
+}
+
