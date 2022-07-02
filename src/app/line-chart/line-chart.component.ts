@@ -9,8 +9,9 @@ import {
 import { Chart, ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { default as Annotation } from 'chartjs-plugin-annotation';
-import { IMaster } from '../interfaces/master.interface';
+
 import { formatDate } from '@angular/common';
+import { IMaster } from '../interfaces/master.interface';
 
 @Component({
   selector: 'app-line-chart',
@@ -69,11 +70,11 @@ export class LineChartComponent implements OnInit {
     datasets: [
       {
         data: this.tempData, //[29.99, 32.39, 35.5, 35.16, 34.23],
-        backgroundColor: 'green',
-        borderColor: 'blue',
-        pointBackgroundColor: 'white',
+        backgroundColor: 'white',
+        borderColor: 'white',
+        pointBackgroundColor: 'blue',
         pointBorderColor: 'white',
-        pointHoverBackgroundColor: 'darkblue',
+        // pointHoverBackgroundColor: 'white',
       },
     ],
     labels: this.labelsData, //['6:00 AM', '9:00 AM', '12:00 PM', '3:00 PM', '9:00 PM'],
@@ -87,8 +88,9 @@ export class LineChartComponent implements OnInit {
     scales: {
       x: {
         grid: {
-          color: 'rgba(0, 0, 0, 0)',
+          // color: 'rgba(0, 0, 0, 0)',
           borderColor: 'white',
+          borderWidth: 2,
         },
         ticks: {
           color: 'white',
@@ -97,7 +99,8 @@ export class LineChartComponent implements OnInit {
       'y-axis-0': {
         position: 'left',
         grid: {
-          color: 'rgba(0, 0, 0, 0)',
+          // color: 'rgba(0, 0, 0, 0)',
+          borderWidth: 2,
           borderColor: 'white',
         },
         ticks: {
