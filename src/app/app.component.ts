@@ -77,6 +77,11 @@ export class AppComponent implements OnInit {
   }
 
   formatForcastData(data: IWeatherData[]) {
+    this.forcastTempInfo = [];
+    this.forcastWindInfo = [];
+    this.forcastWeatherInfo = [];
+    this.dataTime = [];
+    
     data.forEach((element: any) => {
       this.forcastTempInfo.push(element.main);
       this.forcastWindInfo.push(element.wind);
