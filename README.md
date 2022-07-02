@@ -1,5 +1,9 @@
 # WeatherApp
 
+See live Demo @ https://imthesk01.github.io/weatherForcast/
+
+this webpage uses your system location to fetch data, Please allow to access system location.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.0.
 
 ## Development server
