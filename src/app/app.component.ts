@@ -24,13 +24,14 @@ export class AppComponent implements OnInit {
   isToday: boolean = true;
   coords: { lat: number; lon: number };
   todayDate = new Date(Date.now());
-  isLoad = false;
+  isLocoationLoaded = false;
   masterChartData: IMaster = {
     main: [],
     wind: [],
     weather: [],
     date: [],
   };
+  
 
   constructor(private appService: AppService) {}
 
@@ -42,13 +43,16 @@ export class AppComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       this.coords = { lat: latitude, lon: longitude };
+      this.isLocoationLoaded = true;
       this.getCurrentData();
       this.getForcastData();
     },
     function(error) {
-      console.error(error)
+      console.error(error)      
       alert(error.message + " Please enable your GPS.");
-    });
+      // this.isLocoationLoaded = false;
+    }
+    );
 
   }
 
@@ -93,7 +97,7 @@ export class AppComponent implements OnInit {
     this.masterChartData.weather = this.forcastWeatherInfo;
     this.masterChartData.wind = this.forcastWindInfo;
     this.masterChartData.date = this.dataTime;
-    this.isLoad = true;
+
   }
 
   formatTodayData(data: IWeatherData) {

@@ -1,4 +1,4 @@
-<main class="main-container">
+<main class="main-container" *ngIf="isLocoationLoaded">
   <div class="location-and-date">
     <h1 class="location-and-date__location">
       {{ cityInfo?.name }}, {{ cityInfo?.country }}
@@ -114,10 +114,13 @@
   </div>
 
 <!-- chart -->
-<div class="chart" style="width: 100%" *ngIf="isLoad">
+<div class="chart" style="width: 100%" *ngIf="isLocoationLoaded">
   <app-line-chart [weatherData] = masterChartData [isToday]="isToday"></app-line-chart>
 </div>
 
 
 
 </main>
+<div class="errorMsg" *ngIf="!isLocoationLoaded">
+  Please enable your location.
+</div>
