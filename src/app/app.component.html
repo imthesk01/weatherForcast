@@ -1,0 +1,123 @@
+<main class="main-container">
+  <div class="location-and-date">
+    <h1 class="location-and-date__location">
+      {{ cityInfo?.name }}, {{ cityInfo?.country }}
+    </h1>
+    <div>{{ todayDate |  date: " EEEE MMM d, h:mm a" }}</div>
+  </div>
+
+  <div class="current-temperature">
+    <div class="current-temperature__icon-container">
+      <img
+        src="{{ iconURL + tempInfo.icon + '.png' }}"
+        class="current-temperature__icon"
+        alt=""
+      />
+    </div>
+    <div class="current-temperature__content-container">
+      <div class="current-temperature__value">{{ tempInfo.temp }}&deg;</div>
+      <div class="current-temperature__summary">
+        {{ tempInfo.description }}
+      </div>
+    </div>
+  </div>
+
+  <div class="current-stats">
+    <div>
+      <div class="current-stats__value">{{ tempInfo.temp_max }}&deg;</div>
+      <div class="current-stats__label">High</div>
+      <div class="current-stats__value">{{ tempInfo.temp_min }}&deg;</div>
+      <div class="current-stats__label">Low</div>
+    </div>
+    <div>
+      <div class="current-stats__value">{{ tempInfo.windSpeed }}m/s</div>
+      <div class="current-stats__label">Wind</div>
+      <div class="current-stats__value">{{ tempInfo.humidity }}%</div>
+      <div class="current-stats__label">Humidity</div>
+    </div>
+    <div>
+      <div class="current-stats__value">{{ sunRise | date: "h:mm a" }}</div>
+      <div class="current-stats__label">Sunrise</div>
+      <div class="current-stats__value">{{ sunset | date: "h:mm a" }}</div>
+      <div class="current-stats__label">Sunset</div>
+    </div>
+  </div>
+
+  <div class="action_buttons">
+    <div class="tab">
+      <button class="tablinks" (click)="isToday = true">Today's weather</button>
+      <button class="tablinks" (click)="isToday = false">Next 5 days</button>
+    </div>
+    <div class="refresh tab">
+      <button class="tablinks" (click)="refreshData()">Refresh</button>
+    </div>
+  </div>
+
+  <div class="weather-by-hour" *ngIf="isToday">
+    <div class="weather-by-hour__container">
+      <div
+        class="weather-by-hour__item"
+        *ngFor="let e of [].constructor(5); let i = index"
+      >
+        <div class="weather-by-hour__hour">
+          {{ dataTime[i] | date: " MMM d, h:mm a" }}
+        </div>
+        <img
+          src="{{ iconURL + forcastWeatherInfo[i].icon + '.png' }}"
+          alt=" forcastWeatherInfo[i].description"
+        />
+        <div>{{ forcastTempInfo[i].temp }}&deg;</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="next-5-days" *ngIf="!isToday">
+    <div class="next-5-days__container">
+      <ng-container *ngFor="let weather of forcastWeatherInfo; let i = index">
+        <div class="next-5-days__row" *ngIf="i % 7 == 0">
+          <div class="next-5-days__date">
+            {{ dataTime[i] | date: "EEEE" }}
+            <div class="next-5-days__label">
+              {{ dataTime[i] | date: "MMM d" }}
+            </div>
+          </div>
+
+          <div class="next-5-days__low">
+            {{ forcastTempInfo[i].temp_min }}&deg;
+            <div class="next-5-days__label">Low</div>
+          </div>
+
+          <div class="next-5-days__high">
+            {{ forcastTempInfo[i].temp_max }}&deg;
+            <div class="next-5-days__label">High</div>
+          </div>
+
+          <div class="next-5-days__icon">
+            <img
+              src="{{ iconURL + forcastWeatherInfo[i].icon + '.png' }}"
+              alt="Sunny"
+            />
+          </div>
+
+          <div class="next-5-days__rain">
+            {{ forcastTempInfo[i].humidity }}%
+            <div class="next-5-days__label">Humidity</div>
+          </div>
+
+          <div class="next-5-days__wind">
+            {{ forcastWindInfo[i].speed }}m/s
+            <div class="next-5-days__label">Wind</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+<!-- chart -->
+<div class="chart" style="width: 100%" *ngIf="isLoad">
+  <app-line-chart [weatherData] = masterChartData [isToday]="isToday"></app-line-chart>
+</div>
+
+
+
+</main>

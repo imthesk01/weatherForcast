@@ -1,0 +1,9 @@
+.chart_comp{
+    width: 100%;
+    /* background:linear-gradient(to bottom, rgb(204 205 227) 0%, rgb(20,136,204) 100%); */
+    margin: 20px 0px;
+}
+
+.Ccanvas{
+    width: 100%;
+}
